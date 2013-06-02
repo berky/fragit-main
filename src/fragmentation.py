@@ -377,6 +377,7 @@ class Fragmentation(FragItConfig):
         self._mfcc_order = 0
         if self.getOutputFormat() == 'XYZ-MFCC':
             self._mfcc_order = self.getMFCCOrder()
+            print self._mfcc_order
             if self._mfcc_order <= 0:
                 raise ValueError("You must specify the order of capping.")
             self.build_caps()

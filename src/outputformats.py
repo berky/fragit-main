@@ -25,25 +25,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 import gamessfmo
 import xyzmfcc
+import xyz
+import orca
 
 def get_writer_and_extension(theformat):
-	formats = supported_output_formats()
-	extensions = supported_output_fileexts()
-	if not formats.has_key(theformat):
-		raise ValueError("The format you requested is not available")
-	return (formats[theformat],extensions[theformat])
+    formats = supported_output_formats()
+    extensions = supported_output_fileexts()
+    if not formats.has_key(theformat):
+        raise ValueError("The format you requested is not available")
+    return (formats[theformat], extensions[theformat])
 
 ## Returns ALL supported output formats
 def supported_output_formats():
-	formats = dict()
-	formats['GAMESS-FMO'] = gamessfmo.GamessFMO
-	formats['XYZ-MFCC'] = xyzmfcc.XYZMFCC
-	return formats
+    formats = dict()
+    formats['GAMESS-FMO'] = gamessfmo.GamessFMO
+    formats['XYZ-MFCC'] = xyzmfcc.XYZMFCC
+    formats['XYZ'] = xyz.XYZ
+    formats['ORCA'] = orca.ORCA
+    return formats
 
 ## Returns ALL supported output formats
 def supported_output_fileexts():
-	formats = dict()
-	formats['GAMESS-FMO'] = ".inp"
-	formats['XYZ-MFCC'] = ".xyz"
-	return formats
-
+    formats = dict()
+    formats['GAMESS-FMO'] = ".inp"
+    formats['XYZ-MFCC'] = ".xyz"
+    formats['XYZ'] = ".xyz"
+    formats['ORCA'] = ".inp"
+    return formats

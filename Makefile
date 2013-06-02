@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 all:
-	python setup.py build
-	python setup.py install --prefix=/home/cstein/Programs
+	python2 setup.py build
+	python2 setup.py install --user
 
 test:
 	cd tests; $(MAKE) $(MFLAGS) test;
