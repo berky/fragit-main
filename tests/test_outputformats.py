@@ -26,6 +26,8 @@ import os
 import unittest
 from gamessfmo import GamessFMO
 from xyzmfcc import XYZMFCC
+from xyz import XYZ
+from orca import ORCA
 import outputformats
 
 class TestOutputFormatsModule(unittest.TestCase):
@@ -37,12 +39,11 @@ class TestOutputFormatsModule(unittest.TestCase):
         self.assertRaises(ValueError, outputformats.get_writer_and_extension, "bogus")
         self.assertEqual(outputformats.get_writer_and_extension("GAMESS-FMO"), (GamessFMO,".inp"))
 
-
     def test_supported_output_formats(self):
-        self.assertEqual( outputformats.supported_output_formats(), {'GAMESS-FMO':GamessFMO, 'XYZ-MFCC': XYZMFCC} )
+        self.assertEqual( outputformats.supported_output_formats(), {'GAMESS-FMO':GamessFMO, 'XYZ-MFCC':XYZMFCC, 'XYZ':XYZ, 'ORCA':ORCA } )
 
     def test_supported_output_fileexts(self):
-        self.assertEqual( outputformats.supported_output_fileexts(), {'GAMESS-FMO':'.inp', 'XYZ-MFCC': '.xyz'} )
+        self.assertEqual( outputformats.supported_output_fileexts(), {'GAMESS-FMO':'.inp', 'XYZ-MFCC':'.xyz', 'XYZ':'.xyz', 'ORCA':'.inp'} )
 
 def suite():
   s = unittest.TestSuite()
