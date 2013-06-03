@@ -75,7 +75,7 @@ class XYZ(Standard):
     template.override()
     template.write()
 
-  def _build_single_fragment(self,fragments,ifg,caps):
+  def _build_single_fragment(self,fragments,ifg):
     """
         fragment: atom idx of the current fragment
         pairs   : pairs of breaking points
@@ -83,37 +83,6 @@ class XYZ(Standard):
     output_fragment = fragments[ifg][:]
     output_atoms = [self._fragmentation.mol.GetAtom(id) for id in output_fragment]
     output_types = [atom.GetAtomicNum() for atom in output_atoms]
-
-    print "output_fragment:"
-    print output_fragment
-    print "output_atoms:"
-    print output_atoms
-    print "output_types:"
-    print output_types
-
-    lc = None
-    rc = None
-    if ifg > 0:
-      lc = caps[ifg-1]
-    if ifg < len(fragments)-1:
-      rc = caps[ifg]
-
-    #if lc is not None: print "lc:", lc[1]
-    #if rc is not None: print "rc:", rc[1]
-
-    if lc is not None:
-      for id,atom_id in enumerate(lc[1]):
-        if atom_id in output_fragment: continue
-        output_fragment.append(atom_id)
-        output_atoms.append(lc[0][id])
-        output_types.append(lc[2][id])
-
-    if rc is not None:
-      for id,atom_id in enumerate(rc[1]):
-        if atom_id in output_fragment: continue
-        output_fragment.append(atom_id)
-        output_atoms.append(rc[0][id])
-        output_types.append(rc[2][id])
 
     return output_atoms, output_fragment, output_types
 
@@ -134,7 +103,7 @@ class XYZ(Standard):
     filename_template = "%s_%s_%03i%s"
     # first we dump all fragments
     for ifg in range(len(self._fragmentation.getFragments())):
-      (atms, ids, types) = self._build_single_fragment(self._fragmentation.getFragments(), ifg, self._fragmentation._caps)
+      (atms, ids, types) = self._build_single_fragment(self._fragmentation.getFragments(), ifg)
       ss = self.fragment_xyz(atms, ids, types)
       with open(filename_template % (ff,"FRAGMENT",ifg+1,ext), "w") as f:
         f.write(ss)

@@ -155,9 +155,9 @@ class Fragmentation(FragItConfig):
         if (len(self._residue_names) > 0):
             return self._residue_names
         patterns =     {
-                "WATER"    : "[H]O[H]",
-                "NH3+"  :"N[H3]",
-                "AMINO"    : "C(=O)NC",
+                "WATER" : "[H]O[H]",
+                "NH3+"  : "N[H3]",
+                "AMINO" : "C(=O)NC",
                 "SUGAR" : "C1C(CO)OC(O)C(O)C1(O)"
                 }
         result = []
