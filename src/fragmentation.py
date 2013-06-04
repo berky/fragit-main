@@ -64,6 +64,9 @@ class Fragmentation(FragItConfig):
             self._mergeable_atoms.extend(value)
 
     def doFragmentMerging(self):
+        """
+        Merge a specific fragment into another specific fragment.
+        """
         fragments_to_merge = self.getFragmentsToMerge()
         if len(fragments_to_merge) == 0: return
         fragments = self.getFragments()
@@ -76,6 +79,13 @@ class Fragmentation(FragItConfig):
         self._fragments = fragments[:]
         self._CleanMergedBonds()
 
+    def doFragmentSpecificMerging(self):
+        """
+        Merge a specific fragment into all other fragments and remove it as a singular fragment.
+        """
+        fragments_to_merge = self.getFragmentsToMerge()
+
+
     def doFragmentCombination(self):
         fragments_to_combine = self.getCombineFragments()
         if len(fragments_to_combine) == 0: return
@@ -84,16 +94,22 @@ class Fragmentation(FragItConfig):
         combined_fragment = ravel2D([fragments.pop(id-1) for id in fragments_to_combine])
         combined_fragment.sort()
         fragments.append(combined_fragment)
+
         self._fragments = fragments[:]
         self._CleanMergedBonds()
 
     def getFragmentsToMerge(self):
+        """
+        Return a list of [...] representing
+        """
         fragments = self.getFragments()
         fragments_to_merge = []
+        # each fragment is a list of integers (one for each atom in said fragment)
         for i,fragment in enumerate(fragments):
             for sid in self._mergeable_atoms:
                 if sid in fragment and i not in fragments_to_merge:
                     fragments_to_merge.append(i)
+        print fragments_to_merge
         return fragments_to_merge
 
     def doFragmentation(self):
@@ -144,12 +160,12 @@ class Fragmentation(FragItConfig):
     def determineFormalCharges(self):
         model = self.getChargeModel()
         charge_model = openbabel.OBChargeModel.FindType(model)
-        if charge_model is None: raise ValueError("The charge model '%s' is not valid" % model)
+        if charge_model is None: raise ValueError("The charge model '%s' is not valid." % model)
         self.formalCharges = tuple([0.0 for i in range(self.mol.NumAtoms())])
         if charge_model.ComputeCharges(self.mol):
             self.formalCharges = charge_model.GetPartialCharges()
         else:
-            print "charges are not available."
+            print "Charges are not available."
 
     def identifyResidues(self):
         if (len(self._residue_names) > 0):

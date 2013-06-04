@@ -33,8 +33,8 @@ class FragItData(dict):
   def __init__(self, *args):
     dict.__init__(self, args)
     self.data_types=dict()
-    self.data_types['maxfragsize'] = int
-    #self.data_types['minfragsize'] = int
+    self.data_types['maxfragsize']=int
+    #self.data_types['minfragsize']=int
     self.data_types['writer'] = str
     self.data_types['groupcount']=int
     self.data_types['boundaries']=str
@@ -48,6 +48,7 @@ class FragItData(dict):
     self.data_types['atomids']=str
     self.data_types['chargemodel']=str
     self.data_types['order']=int
+    self.data_types['mergespecific']=int
 
     # items here are complex values that need
     # specific parsing later on
@@ -56,7 +57,7 @@ class FragItData(dict):
     self.data_types['nterminal']=str
     self.data_types['pairs']=str
     self.data_types['atomids']=str
-    self.data_types['combinefragments'] = str
+    self.data_types['combinefragments']=str
     self.data_types['lcap']=str
     self.data_types['rcap']=str
 
@@ -66,6 +67,7 @@ class FragItData(dict):
     self['fragmentation']['groupcount']=1
     self['fragmentation']['chargemodel']="MMFF94"
     self['fragmentation']['combinefragments'] = "" # list of integers
+    self['fragmentation']['mergespecific']=None
 
     self['output'] = dict()
     self['output']['boundaries']=""

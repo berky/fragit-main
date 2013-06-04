@@ -64,6 +64,8 @@ def main(argv=None):
                 help="Specify this flag to disable the use protection patterns.")
     general.add_option("--merge-glycine", action="store_true", dest="merge_glycine", default=False,
                 help="Merge a glycine to the neighbor fragment when fragmenting proteins.")
+    general.add_option("--merge-specific", dest="mergespecific", type=int, default=None, metavar="integer",
+                       help="Merge a specific fragment into all other fragments and remove it as a singular fragment.")
     general.add_option("--charge-model", dest="charge_model", default=cfg.getChargeModel(),
                       help="Charge model to use [%default]")
     general.add_option("--combine-fragments", dest="combinefragments", type=str, default="",metavar="list of integers",
@@ -122,6 +124,7 @@ def main(argv=None):
 
 
     # do the fragmentation procedure
+    # 'fragmentation.doFragmentSpecificMerging()' should go somewhere here...
     fragmentation.setCombineFragments(options.combinefragments)
     if options.disable_protection:
         fragmentation.clearProtectPatterns()
